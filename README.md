@@ -24,7 +24,13 @@ Pronto — o site já pode ser acessado e usado direto do celular ou computador,
 ## Estrutura
 
 ```
-index.html   -> estrutura do site
-style.css    -> visual (fundo branco, fonte Poppins, verde claro + azul escuro)
-script.js    -> lógica de montagem do texto e cópia
+index.html               -> estrutura do site
+style.css                -> visual (fundo branco, fonte Poppins, verde claro + azul escuro)
+script.js                -> lógica de montagem do texto e cópia
+site.webmanifest         -> configuração do PWA (nome, cores, ícones)
+favicon.ico / favicon-16x16.png / favicon-32x32.png  -> ícones da aba do navegador
+apple-touch-icon.png     -> ícone ao adicionar na tela do iPhone
+android-chrome-192x192.png / android-chrome-512x512.png -> ícones do PWA no Android
 ```
+
+Todos esses arquivos precisam estar juntos, na raiz do repositório, para o favicon e o PWA funcionarem corretamente.
