@@ -133,8 +133,8 @@ html,body{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
-  background:var(--paper);
-  border:1px solid var(--line);
+  background:#eef1f5;
+  border:1px solid #d7dee6;
   border-radius:14px;
   padding:10px;
 }

@@ -53,6 +53,8 @@ clearBtn.addEventListener("click", () => {
   render();
 });
 
+const INTRO_TEXT = "Olá, tudo bem? Solicito reanálise conforme as informações a seguir:";
+
 function buildParts() {
   const parts = [];
 
@@ -72,16 +74,21 @@ function buildParts() {
   return parts;
 }
 
-function render() {
+function buildText() {
   const parts = buildParts();
+  if (parts.length === 0) return "";
+  return `${INTRO_TEXT}\n\n${parts.join(" / ")}`;
+}
 
-  if (parts.length === 0) {
+function render() {
+  const text = buildText();
+
+  if (!text) {
     outputBox.innerHTML = `<span class="placeholder">Preencha os campos ao lado para gerar o texto do script mínimo.</span>`;
-    copyBtn.disabled = false;
     return;
   }
 
-  outputBox.textContent = parts.join(" / ");
+  outputBox.textContent = text;
   resetCopyState();
 }
 
@@ -91,10 +98,8 @@ function resetCopyState() {
 }
 
 copyBtn.addEventListener("click", async () => {
-  const parts = buildParts();
-  if (parts.length === 0) return;
-
-  const text = parts.join(" / ");
+  const text = buildText();
+  if (!text) return;
 
   try {
     await navigator.clipboard.writeText(text);
