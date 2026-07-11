@@ -201,6 +201,30 @@ html,body{
   border-color:var(--blue-deep);
 }
 
+/* Campos condicionais */
+.conditional{
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  transition:grid-template-rows .22s ease, opacity .18s ease, margin-top .22s ease;
+  margin-top:0;
+}
+
+.conditional.open{
+  grid-template-rows:1fr;
+  opacity:1;
+  margin-top:12px;
+}
+
+.conditional > *{
+  overflow:hidden;
+  min-height:0;
+}
+
+.conditional .text-input{
+  width:100%;
+}
+
 /* Text inputs */
 .text-row{
   display:flex;

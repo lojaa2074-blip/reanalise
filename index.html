@@ -49,6 +49,9 @@
             <button type="button" class="opt" data-value="Sim">Sim</button>
             <button type="button" class="opt" data-value="Não">Não</button>
           </div>
+          <div class="conditional" id="contratoExtra">
+            <input type="text" id="contratoBanco" class="text-input" placeholder="Nome do banco">
+          </div>
         </div>
 
         <div class="field" data-question="Será quitado?">
@@ -74,7 +77,11 @@
           <div class="options" data-name="renda">
             <button type="button" class="opt" data-value="Holerite">Holerite</button>
             <button type="button" class="opt" data-value="Holerite + Extrato">Holerite + Extrato</button>
+            <button type="button" class="opt" data-value="Holerite + Outros">Holerite + Outros</button>
             <button type="button" class="opt" data-value="Faturamento 12 meses emitido pelo contador">Faturamento 12 meses (contador)</button>
+          </div>
+          <div class="conditional" id="rendaExtra">
+            <input type="text" id="rendaOutrosDesc" class="text-input" placeholder="Descreva o que compõe a renda">
           </div>
         </div>
 
@@ -85,6 +92,9 @@
             <button type="button" class="opt" data-value="Solteiro(a)">Solteiro(a)</button>
             <button type="button" class="opt" data-value="Divorciado(a)">Divorciado(a)</button>
             <button type="button" class="opt" data-value="Amasiado(a)">Amasiado(a)</button>
+          </div>
+          <div class="conditional" id="estadoCivilExtra">
+            <input type="text" id="estadoCivilEsposa" class="text-input" placeholder="Dados da esposa (nome, CPF, etc.)">
           </div>
         </div>
 
