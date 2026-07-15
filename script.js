@@ -5,7 +5,8 @@ const FIELD_ORDER = [
   { name: "entrada",      question: "Composição da entrada?" },
   { name: "renda",        question: "Composição da renda?" },
   { name: "estadoCivil",  question: "Estado Civil?" },
-  { name: "declaraIR",    question: "Declara IR?" }
+  { name: "declaraIR",    question: "Declara IR?" },
+  { name: "experienciaCredito", question: "Possui experiência de crédito?" }
 ];
 
 // Configuração dos campos condicionais (abrem um input extra quando uma resposta específica é escolhida)
@@ -27,6 +28,12 @@ const CONDITIONALS = {
     containerId: "estadoCivilExtra",
     inputId: "estadoCivilEsposa",
     extraLabel: "Dados da esposa"
+  },
+  experienciaCredito: {
+    triggerValue: "Sim",
+    containerId: "experienciaCreditoExtra",
+    inputId: "experienciaCreditoInfo",
+    extraLabel: "Informação"
   }
 };
 
@@ -36,7 +43,8 @@ const state = {
   entrada: null,
   renda: null,
   estadoCivil: null,
-  declaraIR: null
+  declaraIR: null,
+  experienciaCredito: null
 };
 
 const outputBox = document.getElementById("output");
@@ -44,6 +52,8 @@ const copyBtn = document.getElementById("copyBtn");
 const copyLabel = document.getElementById("copyLabel");
 const celularInput = document.getElementById("celular");
 const bancoInput = document.getElementById("banco");
+const checagemDataInput = document.getElementById("checagemData");
+const checagemHoraInput = document.getElementById("checagemHora");
 const clearBtn = document.getElementById("clearBtn");
 
 // Seleção das opções (toggle único por grupo)
@@ -90,6 +100,8 @@ Object.values(CONDITIONALS).forEach(config => {
 
 celularInput.addEventListener("input", render);
 bancoInput.addEventListener("input", render);
+checagemDataInput.addEventListener("input", render);
+checagemHoraInput.addEventListener("input", render);
 
 clearBtn.addEventListener("click", () => {
   Object.keys(state).forEach(k => state[k] = null);
@@ -98,6 +110,8 @@ clearBtn.addEventListener("click", () => {
   document.querySelectorAll(".conditional .text-input").forEach(i => i.value = "");
   celularInput.value = "";
   bancoInput.value = "";
+  checagemDataInput.value = "";
+  checagemHoraInput.value = "";
   render();
 });
 
@@ -132,10 +146,25 @@ function buildParts() {
   return parts;
 }
 
+function formatDateBR(isoDate) {
+  if (!isoDate) return "";
+  const [year, month, day] = isoDate.split("-");
+  return `${day}/${month}/${year}`;
+}
+
 function buildText() {
   const parts = buildParts();
   if (parts.length === 0) return "";
-  return `${INTRO_TEXT}\n\n${parts.join(" / ")}`;
+
+  let text = `${INTRO_TEXT}\n\n${parts.join("   /   ")}`;
+
+  const data = checagemDataInput.value;
+  const hora = checagemHoraInput.value;
+  if (data && hora) {
+    text += `\n\nChecagem realizada com a cliente pelo número celular do cadastro, em ${formatDateBR(data)} as ${hora} hs.`;
+  }
+
+  return text;
 }
 
 function render() {

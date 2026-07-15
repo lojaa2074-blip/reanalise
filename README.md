@@ -4,6 +4,8 @@ Site simples e estático para montar o texto padrão do "Script Mínimo" com um 
 
 ## Como publicar no GitHub Pages
 
+**Importante:** sempre que houver uma atualização, substitua **todos** os arquivos do ZIP no repositório (especialmente `index.html`, `style.css` e `script.js` juntos). Atualizar só um deles pode fazer partes do site pararem de funcionar, já que os três trabalham em conjunto.
+
 1. Crie um repositório novo no GitHub (ex: `reanalise`).
 2. Suba os 3 arquivos deste ZIP (`index.html`, `style.css`, `script.js`) para a raiz do repositório.
 3. No repositório, vá em **Settings → Pages**.
