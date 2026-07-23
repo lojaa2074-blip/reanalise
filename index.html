@@ -70,6 +70,9 @@
             <button type="button" class="opt" data-value="Carro + Dinheiro">Carro + Dinheiro</button>
             <button type="button" class="opt" data-value="Dinheiro">Dinheiro</button>
           </div>
+          <div class="conditional" id="entradaExtra">
+            <input type="text" id="entradaCarroInfo" class="text-input" placeholder="Informações do carro (modelo, ano, etc.)">
+          </div>
         </div>
 
         <div class="field" data-question="Composição da renda?">
@@ -121,11 +124,14 @@
           </div>
         </div>
 
-        <div class="field field-text-group">
-          <label class="field-label">Celular / Chave Pix</label>
-          <div class="text-row">
-            <input type="text" id="celular" class="text-input" placeholder="Ex: (11) 99999-9999">
-            <input type="text" id="banco" class="text-input" placeholder="Banco (Ex: Itaú)">
+        <div class="field" data-question="Chave Pix vinculada?">
+          <label class="field-label">Possui chave pix vinculada ao telefone do cadastro?</label>
+          <div class="options" data-name="chavePix">
+            <button type="button" class="opt" data-value="Sim">Sim</button>
+            <button type="button" class="opt" data-value="Não">Não</button>
+          </div>
+          <div class="conditional" id="chavePixExtra">
+            <input type="text" id="chavePixBanco" class="text-input" placeholder="Nome do banco">
           </div>
         </div>
 
