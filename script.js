@@ -9,31 +9,43 @@ const FIELD_ORDER = [
   { name: "experienciaCredito", question: "Possui experiência de crédito?" }
 ];
 
-// Configuração dos campos condicionais (abrem um input extra quando uma resposta específica é escolhida)
+// Configuração dos campos condicionais (abrem um input extra quando alguma das respostas-gatilho é escolhida)
 const CONDITIONALS = {
   contrato: {
-    triggerValue: "Sim",
+    triggerValues: ["Sim"],
     containerId: "contratoExtra",
     inputId: "contratoBanco",
     extraLabel: "Banco"
   },
+  entrada: {
+    triggerValues: ["Carro", "Carro + Dinheiro"],
+    containerId: "entradaExtra",
+    inputId: "entradaCarroInfo",
+    extraLabel: "Carro"
+  },
   renda: {
-    triggerValue: "Holerite + Outros",
+    triggerValues: ["Holerite + Outros"],
     containerId: "rendaExtra",
     inputId: "rendaOutrosDesc",
     extraLabel: "Descrição"
   },
   estadoCivil: {
-    triggerValue: "Casado(a)",
+    triggerValues: ["Casado(a)"],
     containerId: "estadoCivilExtra",
     inputId: "estadoCivilEsposa",
     extraLabel: "Dados da esposa"
   },
   experienciaCredito: {
-    triggerValue: "Sim",
+    triggerValues: ["Sim"],
     containerId: "experienciaCreditoExtra",
     inputId: "experienciaCreditoInfo",
     extraLabel: "Informação"
+  },
+  chavePix: {
+    triggerValues: ["Sim"],
+    containerId: "chavePixExtra",
+    inputId: "chavePixBanco",
+    extraLabel: "Banco"
   }
 };
 
@@ -44,14 +56,13 @@ const state = {
   renda: null,
   estadoCivil: null,
   declaraIR: null,
-  experienciaCredito: null
+  experienciaCredito: null,
+  chavePix: null
 };
 
 const outputBox = document.getElementById("output");
 const copyBtn = document.getElementById("copyBtn");
 const copyLabel = document.getElementById("copyLabel");
-const celularInput = document.getElementById("celular");
-const bancoInput = document.getElementById("banco");
 const checagemDataInput = document.getElementById("checagemData");
 const checagemHoraInput = document.getElementById("checagemHora");
 const clearBtn = document.getElementById("clearBtn");
@@ -84,7 +95,7 @@ function updateConditional(name) {
 
   const container = document.getElementById(config.containerId);
   const input = document.getElementById(config.inputId);
-  const shouldShow = state[name] === config.triggerValue;
+  const shouldShow = config.triggerValues.includes(state[name]);
 
   container.classList.toggle("open", shouldShow);
 
@@ -98,8 +109,6 @@ Object.values(CONDITIONALS).forEach(config => {
   document.getElementById(config.inputId).addEventListener("input", render);
 });
 
-celularInput.addEventListener("input", render);
-bancoInput.addEventListener("input", render);
 checagemDataInput.addEventListener("input", render);
 checagemHoraInput.addEventListener("input", render);
 
@@ -108,8 +117,6 @@ clearBtn.addEventListener("click", () => {
   document.querySelectorAll(".opt.selected").forEach(b => b.classList.remove("selected"));
   document.querySelectorAll(".conditional").forEach(c => c.classList.remove("open"));
   document.querySelectorAll(".conditional .text-input").forEach(i => i.value = "");
-  celularInput.value = "";
-  bancoInput.value = "";
   checagemDataInput.value = "";
   checagemHoraInput.value = "";
   render();
@@ -126,7 +133,7 @@ function buildParts() {
     let line = `${f.question} ${state[f.name]}`;
 
     const config = CONDITIONALS[f.name];
-    if (config && state[f.name] === config.triggerValue) {
+    if (config && config.triggerValues.includes(state[f.name])) {
       const extraValue = document.getElementById(config.inputId).value.trim();
       if (extraValue) {
         line += ` (${config.extraLabel}: ${extraValue})`;
@@ -136,12 +143,14 @@ function buildParts() {
     parts.push(line);
   });
 
-  const celular = celularInput.value.trim();
-  const banco = bancoInput.value.trim();
-  if (celular) {
-    const bancoTxt = banco ? banco : "xxxx";
-    parts.push(`Celular: ${celular} (Chave Pix vinculado - Banco ${bancoTxt})`);
+  // Chave Pix tem formato de frase próprio (não segue o padrão "pergunta resposta")
+  if (state.chavePix === "Sim") {
+    const banco = document.getElementById("chavePixBanco").value.trim();
+    let pixLine = "Possui chave pix vinculado no fone do cadastro";
+    pixLine += banco ? ` - Banco: ${banco}` : " - Banco";
+    parts.push(pixLine);
   }
+  // Quando "Não", nada é adicionado (fica em branco, conforme solicitado)
 
   return parts;
 }
