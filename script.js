@@ -122,7 +122,7 @@ clearBtn.addEventListener("click", () => {
   render();
 });
 
-const INTRO_TEXT = "Olá, tudo bem? Seguindo o formato de script mínimo, solicito reanálise conforme as informações abaixo:";
+const INTRO_TEXT = "Olá, tudo bem? Seguindo o formato de script mínimo, solicito reanálise conforme as informações a seguir:";
 
 function buildParts() {
   const parts = [];
@@ -165,12 +165,12 @@ function buildText() {
   const parts = buildParts();
   if (parts.length === 0) return "";
 
-  let text = `${INTRO_TEXT}\n\n${parts.join("   /   ")}`;
+  let text = `${INTRO_TEXT}\n\n${parts.join("   ------   ")}`;
 
   const data = checagemDataInput.value;
   const hora = checagemHoraInput.value;
   if (data && hora) {
-    text += `\n\nChecagem realizada com a cliente pelo número celular do cadastro, em ${formatDateBR(data)} as ${hora} hs.`;
+    text += `\n\n------Checagem realizada com a cliente pelo número celular do cadastro, em ${formatDateBR(data)} as ${hora} hs.`;
   }
 
   return text;
